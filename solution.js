@@ -45,6 +45,14 @@ mongo.connect(url, function(err, db) {
     if (err) throw err
     db.close()
   })
+  //Count all documents where age is greater than the first argument passed to your script
+  dbo.collection("parrots").count({
+    age: {$gt: +process.argv[2]}
+  },function(err, count) {
+    if (err) throw err
+    console.log(count);
+    db.close();
+  })
 })
 
 
