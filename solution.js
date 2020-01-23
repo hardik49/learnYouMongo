@@ -53,6 +53,25 @@ mongo.connect(url, function(err, db) {
     console.log(count);
     db.close();
   })
+  //Aggregate on Collection
+  let size = process.argv[2]
+  let prices = dbo.collection('prices')
+  prices.aggregate([
+    { $match: {
+      size: size
+    }}
+  , { $group: {
+      _id: 'average'
+    , average: {
+        $avg: '$price'
+      }
+    }}
+  ]).toArray(function(err, results) {
+    if (err) throw err
+    let o = results[0]
+    console.log(Number(o.average).toFixed(2))
+    db.close()
+  })
 })
 
 
