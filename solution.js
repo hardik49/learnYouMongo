@@ -17,7 +17,7 @@ mongo.connect(url, function(err, db) {
     console.log(res);
     dbo.close();
   })
-  //Insert data on Collection Parrots
+  //Insert data on Collection Users
   var doc = {
     firstName: firstName
   , lastName: lastName
@@ -27,7 +27,7 @@ mongo.connect(url, function(err, db) {
     console.log(JSON.stringify(doc))
     dbo.close()
   })
-  //Update data on Colllection Parrots
+  //Update data on Colllection Users
   dbo.collection("users").update({
     username: 'tinatime'
   }, {
@@ -35,6 +35,13 @@ mongo.connect(url, function(err, db) {
       age: 40
     }
   }, function(err) {
+    if (err) throw err
+    db.close()
+  })
+  //Remove data on Collection
+  dbo.collection(process.argv[3]).remove({
+    _id: process.argv[4]
+  },function(err) {
     if (err) throw err
     db.close()
   })
